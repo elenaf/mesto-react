@@ -23,12 +23,18 @@ class Main extends React.Component {
         userAvatar: data.avatar,
       })
     })
+    .catch((err) => {
+      console.log(err);
+    })
 
     api.getInitialCards()
     .then(data => {
       this.setState({
         cards: data,
       })
+    })
+    .catch((err) => {
+      console.log(err);
     })
 
   }
