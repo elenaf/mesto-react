@@ -17,6 +17,8 @@ class Popup extends React.Component {
     componentDidUpdate() {
         if (this.props.isOpen) {
             document.addEventListener('keydown', this.handleEscClick);
+        } else {
+            document.removeEventListener('keydown', this.handleEscClick);
         }
     }
 
