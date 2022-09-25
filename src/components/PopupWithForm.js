@@ -7,7 +7,7 @@ class PopupWithForm extends React.Component {
 
         return (
                 <Popup isOpen={ this.props.isOpen } name={ this.props.name } onClose={ this.props.onClose }>
-                        <form className="popup__form" name={this.props.name} noValidate>
+                        <form onSubmit={ this.props.onSubmit } className="popup__form" name={this.props.name} noValidate>
                         <h2 className="popup__title">{this.props.title}</h2>
                         <fieldset className="popup__fields">
                             {this.props.children}
