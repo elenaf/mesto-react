@@ -106,7 +106,7 @@ class App extends React.Component {
   }
 
   handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === this.context._id);
+    const isLiked = card.likes.some(i => i._id === this.state.currentUser._id);
 
     api.changeLikeStatus(card._id, isLiked).then((newCard) => {
       this.setState({ cards: this.state.cards.map((c) => c._id === card._id ? newCard : c) });
@@ -126,10 +126,30 @@ class App extends React.Component {
 
   handleUpdateUser = ({ name, about }) => {
     api.editProfile({name, about})
-    .then((data) => {
-      this.state.currentUser.name = data.name;
-      this.state.currentUser.about = data.about;
+    /* .then((data) => {
+      console.log(data.name);
+      console.log(this.state.currentUser.name);
+      console.log({ ...this.state.currentUser, name: data.name});
+      this.setState({ currentUser: { ...this.state.currentUser, name: data.name} });
+      console.log(data.name);
+      console.log(this.state.currentUser.name);
+      this.setState({ currentUser: { ...this.state.currentUser, about: data.about} });
+      /* this.state.currentUser.name = data.name;
+      this.state.currentUser.about = data.about; /*
       this.closeAllPopups();
+    }) */
+    .then(({ name, about }) => {
+      console.log(`name: '${name}'`);
+      console.log(`about: '${about}'`);
+console.log('this.state.currentUser:');
+console.dir(this.state.currentUser);
+   console.log('{ ...this.state.currentUser, name }:');
+   console.dir({ ...this.state.currentUser, name });
+      this.setState({ currentUser: {...this.state.currentUser, name } });    
+      this.setState({ currentUser: { ...this.state.currentUser, about } });
+      this.closeAllPopups();
+    console.log('this.state.currentUser after calling closeAllPopups():');
+  console.dir(this.state.currentUser);
     })
     .catch((err) => console.log(err));
   }
@@ -137,7 +157,9 @@ class App extends React.Component {
   handleUpdateAvatar = ({ avatar }) => {
     api.updateAvatar({avatar})
     .then((data) => {
-      this.state.currentUser.avatar = data.avatar;
+      
+      this.setState({ currentUser: { ...this.state.currentUser, avatar: data.avatar} });
+      /* this.state.currentUser.avatar = data.avatar; */
       this.closeAllPopups();
     })
     .catch((err) => console.log(err));
